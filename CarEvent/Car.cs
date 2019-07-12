@@ -19,7 +19,7 @@ namespace CarEvent
             MaxSpeed = maxSp;
             PetName = name;
         }
-        public delegate void CarEngineHandler(string msgForCaller);
+        public delegate void CarEngineHandler(object sender, CarEventArgs e);
         public event CarEngineHandler Exploded;
         public event CarEngineHandler AboutToBlow;
 
@@ -37,14 +37,14 @@ namespace CarEvent
             if (carIsDead)
             {
                 if (Exploded != null)
-                    Exploded("Sorry? this car is dead...");
+                    Exploded?.Invoke(this, new CarEventArgs("Sorry? this car is dead..."));
             }
             else
             {
                 CurrentSpeed += delta;
                 if(10 == (MaxSpeed - CurrentSpeed) && AboutToBlow != null)
                 {
-                    AboutToBlow("Careful buddy! Gonna blow!");
+                    AboutToBlow?.Invoke(this, new CarEventArgs("Careful buddy! Gonna blow!"));
                 }
                 if (CurrentSpeed >= MaxSpeed)
                     carIsDead = true;

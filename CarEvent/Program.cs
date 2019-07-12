@@ -13,41 +13,25 @@ namespace CarEvent
             #region Event handlers
             Console.WriteLine("****** Fun with Event ******\n");
             Car c1 = new Car("SlugBug", 100, 10);
-            c1.AboutToBlow += new Car.CarEngineHandler(CarIsAlmostDoomed);
-            c1.AboutToBlow += new Car.CarEngineHandler(CarAboutToBlow);
-
-            Car.CarEngineHandler d = new Car.CarEngineHandler(CarExploded);
-            c1.Exploded += d;
+            c1.AboutToBlow += C1_AboutToBlow;
+            c1.Exploded += C1_Exploded;
 
             Console.WriteLine("****** Speeding up ******");
             for (int i = 0; i < 6; i++)
             {
                 c1.Accelerat(20);
             }
-            c1.Exploded -= d;
-
-            Console.WriteLine("\n****** Speeding up ******");
-            for (int i = 0; i < 6; i++)
-                c1.Accelerat(20);
-            Console.ReadLine();
-            #endregion
-
-            
-        }
-        public static void CarAboutToBlow(string msg) { Console.WriteLine(msg); }
-        public static void CarIsAlmostDoomed(string msg)
-        { Console.WriteLine("=> Critical Message from Car: {0}", msg); }
-        public static void CarExploded(string msg)
-        { Console.WriteLine(msg); }
-        public static void HookIntoEvents()
-        {
-            Car newCar = new Car();
-            newCar.AboutToBlow += NewCar_AboutToBlow;
+            #endregion          
         }
 
-        private static void NewCar_AboutToBlow(string msgForCaller)
+        private static void C1_Exploded(object sender, CarEventArgs e)
         {
-            throw new NotImplementedException();
+            Console.WriteLine(string.Format($"{((Car)sender).PetName} {e.msg}"));
+        }
+
+        private static void C1_AboutToBlow(object sender, CarEventArgs e)
+        {
+            Console.WriteLine(string.Format($"{((Car)sender).PetName} {e.msg}"));
         }
     }
 }
