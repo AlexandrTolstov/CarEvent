@@ -19,19 +19,8 @@ namespace CarEvent
             MaxSpeed = maxSp;
             PetName = name;
         }
-        public delegate void CarEngineHandler(object sender, CarEventArgs e);
-        public event CarEngineHandler Exploded;
-        public event CarEngineHandler AboutToBlow;
-
-        private CarEngineHandler listOfHandlers;
-        public void RegisterWithCarEngine(CarEngineHandler methodToCall)
-        {
-            listOfHandlers += methodToCall;
-        }
-        public void UnRegisterWithCarEngine(CarEngineHandler methodToCall)
-        {
-            listOfHandlers -= methodToCall;
-        }
+        public event EventHandler<CarEventArgs> Exploded;
+        public event EventHandler<CarEventArgs> AboutToBlow;
         public void Accelerat(int delta)
         {
             if (carIsDead)
