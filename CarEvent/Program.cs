@@ -47,6 +47,16 @@ namespace CarEvent
                 c2.Accelerat(20);
             }
             Console.WriteLine("AboutToBlow event was fired {0} times.", aboutToBlowCounter);
+
+            Car c3 = new Car("Car 3", 100, 10);
+            c3.AboutToBlow += (sender, e) => { Console.WriteLine(e.msg); };
+            c3.Exploded += (sender, e) => { Console.WriteLine(e.msg); };
+
+            Console.WriteLine("\n******* Speeding up *****");
+            for (int i = 0; i < 6; i++)
+            {
+                c3.Accelerat(20);
+            }
             #endregion          
         }
 
