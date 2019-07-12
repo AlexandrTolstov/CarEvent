@@ -24,6 +24,29 @@ namespace CarEvent
             {
                 c1.Accelerat(20);
             }
+
+            Console.WriteLine("**** Anonymous Method ******\n");
+            int aboutToBlowCounter = 0;
+            Car c2 = new Car("Car 2", 100, 10);
+            c2.AboutToBlow += delegate
+            {
+                aboutToBlowCounter++;
+                Console.WriteLine("Eek! Going too fast!");
+            };
+            c2.AboutToBlow += delegate (object sender, CarEventArgs e)
+            {
+                aboutToBlowCounter++;
+                Console.WriteLine("Message from Car: {0}", e.msg);
+            };
+            c2.Exploded += delegate (object sender, CarEventArgs e)
+            {
+                Console.WriteLine("Fatal Message from Car: {0}", e.msg);
+            };
+            for (int i = 0; i < 8; i++)
+            {
+                c2.Accelerat(20);
+            }
+            Console.WriteLine("AboutToBlow event was fired {0} times.", aboutToBlowCounter);
             #endregion          
         }
 
